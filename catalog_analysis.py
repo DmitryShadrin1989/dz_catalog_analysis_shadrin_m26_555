@@ -100,14 +100,48 @@ def duration_in_hours(minutes):
     return f"{minutes // 60}ч {minutes % 60}м"
 
 
+def rating_tier(rating):
+    if rating >= 9:
+        return "шедевр"
+    elif rating >= 5:
+        return "хорошо" if rating >= 7 else "средне"
+    else:
+        return "слабо"
+
+
+def decade_label(year):
+    match year:
+        case _ if year > 2020:
+            return "новые"
+        case _ if 2015 <= year <= 2020:
+            return "недавние"
+        case _:
+            return "старые"
+
+
 def main():
+    # Этап 1. Разминка: переменные, числа, math
     avg_rating = average_rating(movies=movies)
     print(f"avg_rating = {avg_rating}")
 
-    old_film, new_film, avg_age = catalog_age_stats(movies=movies)
-    print(f"oldest_age = {old_film}, newest_age = {new_film}, avg_age = {avg_age}")
+    oldest_age, newest_age, avg_age = catalog_age_stats(movies=movies)
+    print(f"oldest_age = {oldest_age}, newest_age = {newest_age}, avg_age = {avg_age}")
 
     print(duration_in_hours(135))
+
+    # Этап 2. Условия и match
+    print(f"rating = 3, tier - {rating_tier(3)}")
+    print(f"rating = 5, tier - {rating_tier(5)}")
+    print(f"rating = 5.1, tier - {rating_tier(5.1)}")
+    print(f"rating = 7, tier - {rating_tier(7)}")
+    print(f"rating = 9, tier - {rating_tier(9)}")
+    print(f"rating = 9.1, tier - {rating_tier(9.1)}")
+
+    print(f"year = 2014, label - {decade_label(2014)}")
+    print(f"year = 2015, label - {decade_label(2015)}")
+    print(f"year = 2016, label - {decade_label(2016)}")
+    print(f"year = 2020, label - {decade_label(2020)}")
+    print(f"year = 2021, label - {decade_label(2021)}")
 
 
 if __name__ == "__main__":
