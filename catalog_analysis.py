@@ -146,6 +146,31 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
+def normalize_title(title):
+    words_list = title.split()
+    result = ""
+    for word in words_list:
+        if result != "":
+            result += " "
+        result += word[0].upper() + word[1:]
+    return result
+
+
+def make_slug(title):
+    return title.lower().replace(" ", "-")
+
+
+def format_report_line(movie):
+    title = normalize_title(movie["title"])
+    duration = duration_in_hours(movie["duration_min"])
+    genres = ", ".join(sorted(movie["genres"]))
+
+    return (
+        f'"{title}" ({movie["year"]}) — {movie["rating"]}/10, '
+        f"{duration}, жанры: {genres}"
+    )
+
+
 def show_examples():
     def print_stage(stage):
         print("-----------------------------------------------------------")
@@ -180,6 +205,16 @@ def show_examples():
     print("Первый шедевр в первых трех фильмах:")
     print_first_masterpiece(movies=movies[:3])
     print(f"Фильмов длиннее 120 минут: {count_long_movies(movies=movies)}")
+
+    print_stage("Этап 4. Строки")
+    print("Результат normalize_title:")
+    print(normalize_title(title="silent hours"))
+    print("Результат make_slug:")
+    print(make_slug(title="Silent Hours"))
+    print("Результат format_report_line:")
+    print(format_report_line(movie=movies[0]))
+    print(format_report_line(movie=movies[1]))
+    print(format_report_line(movie=movies[2]))
 
 
 def main():
