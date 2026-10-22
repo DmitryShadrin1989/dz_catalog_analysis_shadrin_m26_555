@@ -171,6 +171,21 @@ def format_report_line(movie):
     )
 
 
+def _sort_movies_by_rating(movies):
+    return sorted(movies, key=lambda film: film["rating"], reverse=True)
+
+
+def titles_sorted_by_rating(movies):
+    sorted_movies = _sort_movies_by_rating(movies=movies)
+    return [film["title"] for film in sorted_movies]
+
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = _sort_movies_by_rating(movies=movies)
+    first_n_movies = sorted_movies[:n]
+    return [(film["title"], film["rating"]) for film in first_n_movies]
+
+
 def show_examples():
     def print_stage(stage):
         print("-----------------------------------------------------------")
@@ -215,6 +230,18 @@ def show_examples():
     print(format_report_line(movie=movies[0]))
     print(format_report_line(movie=movies[1]))
     print(format_report_line(movie=movies[2]))
+
+    print_stage("Этап 5. Списки")
+    print("Список фильмов отсортированный по убыванию:")
+    print(titles_sorted_by_rating(movies=movies))
+    print("Топ 3 фильма по рейтингу:")
+    print(top_n_by_rating(movies=movies))
+    print("Топ 5 фильмов по рейтингу:")
+    print(top_n_by_rating(movies=movies, n=5))
+    print("Топ 30 фильмов по рейтингу:")
+    print(top_n_by_rating(movies=movies, n=30))
+    print("Топ 0 фильмов по рейтингу:")
+    print(top_n_by_rating(movies=movies, n=0))
 
 
 def main():
