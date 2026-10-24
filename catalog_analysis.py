@@ -233,6 +233,29 @@ def iter_high_rated(movies, min_rating=8.0):
             yield film
 
 
+def build_report(movies):
+    print("ОТЧЁТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг: {average_rating(movies=movies)}")
+    _, _, avg_age = catalog_age_stats(movies)
+    print(f"Средний возраст фильмов: {avg_age} лет")
+    print()
+    print("Топ-3 фильма:")
+    sort_movies = _sort_movies_by_rating(movies=movies)
+    for film in sort_movies[:3]:
+        print(f"  {format_report_line(film)}")
+    print()
+    print("Фильмов по жанрам:")
+    tuple_genres = sorted(
+        list(count_by_genre(movies=movies).items()), key=lambda g: (-g[1], g[0])
+    )
+    for genre, count in tuple_genres:
+        print(f"  {genre} — {count}")
+    print()
+    sorted_genres = sorted(all_genres(movies=movies))
+    genres_str = ", ".join(sorted_genres)
+    print(f"Все жанры каталога: {genres_str}")
+
+
 def show_examples():
     def print_stage(stage):
         print("-----------------------------------------------------------")
@@ -368,6 +391,7 @@ def show_examples():
 
 def main():
     show_examples()
+    build_report(movies=movies)
 
 
 if __name__ == "__main__":
