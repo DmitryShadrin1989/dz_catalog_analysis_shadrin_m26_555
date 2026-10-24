@@ -227,6 +227,12 @@ def genres_only_in_one(movies_a, movies_b):
     return all_genres(movies_a) - all_genres(movies_b)
 
 
+def iter_high_rated(movies, min_rating=8.0):
+    for film in movies:
+        if film["rating"] >= min_rating:
+            yield film
+
+
 def show_examples():
     def print_stage(stage):
         print("-----------------------------------------------------------")
@@ -334,6 +340,22 @@ def show_examples():
         )
         print(genres_only_in_one(movies[5:6], movies[:5]))
 
+    def stage_8():
+        print_stage("Этап 8. Итераторы и генераторы")
+
+        print("Демо функции генератора:")
+        high_rated = iter_high_rated(movies=movies)
+        for film in high_rated:
+            print(format_report_line(film))
+
+        print("Демо генераторного выражения:")
+        sum_durations = sum(
+            film["duration_min"] for film in movies if film["rating"] > 7
+        )
+        print(
+            f"Суммарная длительность всех фильмов с рейтингом выше 7: {sum_durations}"
+        )
+
     stage_1()
     stage_2()
     stage_3()
@@ -341,6 +363,7 @@ def show_examples():
     stage_5()
     stage_6()
     stage_7()
+    stage_8()
 
 
 def main():
