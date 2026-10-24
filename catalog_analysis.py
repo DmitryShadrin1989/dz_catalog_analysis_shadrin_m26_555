@@ -212,70 +212,135 @@ def above_average_ratings(movies):
     }
 
 
+def all_genres(movies):
+    result = set()
+    for film in movies:
+        result |= film["genres"]
+    return result
+
+
+def common_actors(movie1, movie2):
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    return all_genres(movies_a) - all_genres(movies_b)
+
+
 def show_examples():
     def print_stage(stage):
         print("-----------------------------------------------------------")
         print(stage)
         print("-----------------------------------------------------------")
 
-    print_stage("Этап 1. Разминка: переменные, числа, math")
-    avg_rating = average_rating(movies=movies)
-    print(f"avg_rating = {avg_rating}")
-    oldest_age, newest_age, avg_age = catalog_age_stats(movies=movies)
-    print(f"oldest_age = {oldest_age}, newest_age = {newest_age}, avg_age = {avg_age}")
-    print(duration_in_hours(135))
+    def stage_1():
+        print_stage("Этап 1. Разминка: переменные, числа, math")
+        avg_rating = average_rating(movies=movies)
+        print(f"avg_rating = {avg_rating}")
 
-    print_stage("Этап 2. Условия и match")
-    print(f"rating = 3, tier - {rating_tier(3)}")
-    print(f"rating = 5, tier - {rating_tier(5)}")
-    print(f"rating = 5.1, tier - {rating_tier(5.1)}")
-    print(f"rating = 7, tier - {rating_tier(7)}")
-    print(f"rating = 9, tier - {rating_tier(9)}")
-    print(f"rating = 9.1, tier - {rating_tier(9.1)}")
-    print(f"year = 2014, label - {decade_label(2014)}")
-    print(f"year = 2015, label - {decade_label(2015)}")
-    print(f"year = 2016, label - {decade_label(2016)}")
-    print(f"year = 2020, label - {decade_label(2020)}")
-    print(f"year = 2021, label - {decade_label(2021)}")
+        oldest_age, newest_age, avg_age = catalog_age_stats(movies=movies)
+        print(
+            f"oldest_age = {oldest_age}, newest_age = {newest_age}, avg_age = {avg_age}"
+        )
 
-    print_stage("Этап 3. Циклы")
-    print("Фильмы не в жанре comedy:")
-    print_non_comedy_titles(movies=movies)
-    print("Первый шедевр во всем каталоге:")
-    print_first_masterpiece(movies=movies)
-    print("Первый шедевр в первых трех фильмах:")
-    print_first_masterpiece(movies=movies[:3])
-    print(f"Фильмов длиннее 120 минут: {count_long_movies(movies=movies)}")
+        print(duration_in_hours(135))
 
-    print_stage("Этап 4. Строки")
-    print("Результат normalize_title:")
-    print(normalize_title(title="silent hours"))
-    print("Результат make_slug:")
-    print(make_slug(title="Silent Hours"))
-    print("Результат format_report_line:")
-    print(format_report_line(movie=movies[0]))
-    print(format_report_line(movie=movies[1]))
-    print(format_report_line(movie=movies[2]))
+    def stage_2():
+        print_stage("Этап 2. Условия и match")
 
-    print_stage("Этап 5. Списки")
-    print("Список фильмов отсортированный по убыванию:")
-    print(titles_sorted_by_rating(movies=movies))
-    print("Топ 3 фильма по рейтингу:")
-    print(top_n_by_rating(movies=movies))
-    print("Топ 5 фильмов по рейтингу:")
-    print(top_n_by_rating(movies=movies, n=5))
-    print("Топ 30 фильмов по рейтингу:")
-    print(top_n_by_rating(movies=movies, n=30))
-    print("Топ 0 фильмов по рейтингу:")
-    print(top_n_by_rating(movies=movies, n=0))
+        print(f"rating = 3, tier - {rating_tier(3)}")
+        print(f"rating = 5, tier - {rating_tier(5)}")
+        print(f"rating = 5.1, tier - {rating_tier(5.1)}")
+        print(f"rating = 7, tier - {rating_tier(7)}")
+        print(f"rating = 9, tier - {rating_tier(9)}")
+        print(f"rating = 9.1, tier - {rating_tier(9.1)}")
 
-    print_stage("Этап 6. Словари")
-    print("Словарь с жанрами:")
-    print(count_by_genre(movies=movies))
-    print("Словарь с фильмографией актеров:")
-    print(actor_filmography(movies=movies))
-    print("Словарь с рейтингами выше среднего:")
-    print(above_average_ratings(movies=movies))
+        print(f"year = 2014, label - {decade_label(2014)}")
+        print(f"year = 2015, label - {decade_label(2015)}")
+        print(f"year = 2016, label - {decade_label(2016)}")
+        print(f"year = 2020, label - {decade_label(2020)}")
+        print(f"year = 2021, label - {decade_label(2021)}")
+
+    def stage_3():
+        print_stage("Этап 3. Циклы")
+
+        print("Фильмы не в жанре comedy:")
+        print_non_comedy_titles(movies=movies)
+
+        print("Первый шедевр во всем каталоге:")
+        print_first_masterpiece(movies=movies)
+
+        print("Первый шедевр в первых трех фильмах:")
+        print_first_masterpiece(movies=movies[:3])
+
+        print(f"Фильмов длиннее 120 минут: {count_long_movies(movies=movies)}")
+
+    def stage_4():
+        print_stage("Этап 4. Строки")
+
+        print("Результат normalize_title:")
+        print(normalize_title(title="silent hours"))
+
+        print("Результат make_slug:")
+        print(make_slug(title="Silent Hours"))
+
+        print("Результат format_report_line:")
+        print(format_report_line(movie=movies[0]))
+        print(format_report_line(movie=movies[1]))
+        print(format_report_line(movie=movies[2]))
+
+    def stage_5():
+        print_stage("Этап 5. Списки")
+
+        print("Список фильмов отсортированный по убыванию:")
+        print(titles_sorted_by_rating(movies=movies))
+
+        print("Топ 3 фильма по рейтингу:")
+        print(top_n_by_rating(movies=movies))
+
+        print("Топ 5 фильмов по рейтингу:")
+        print(top_n_by_rating(movies=movies, n=5))
+
+        print("Топ 30 фильмов по рейтингу:")
+        print(top_n_by_rating(movies=movies, n=30))
+
+        print("Топ 0 фильмов по рейтингу:")
+        print(top_n_by_rating(movies=movies, n=0))
+
+    def stage_6():
+        print_stage("Этап 6. Словари")
+
+        print("Словарь с жанрами:")
+        print(count_by_genre(movies=movies))
+
+        print("Словарь с фильмографией актеров:")
+        print(actor_filmography(movies=movies))
+
+        print("Словарь с рейтингами выше среднего:")
+        print(above_average_ratings(movies=movies))
+
+    def stage_7():
+        print_stage("Этап 7. Множества")
+
+        print("Множество всех жанров:")
+        print(all_genres(movies=movies))
+
+        print("Множество актеров снимавшихся в обоих фильмах:")
+        print(common_actors(movie1=movies[0], movie2=movies[3]))
+        print(common_actors(movie1=movies[1], movie2=movies[4]))
+
+        print(
+            "Множество жанров из первого списка фильмов которых нет во втором списке:"
+        )
+        print(genres_only_in_one(movies[5:6], movies[:5]))
+
+    stage_1()
+    stage_2()
+    stage_3()
+    stage_4()
+    stage_5()
+    stage_6()
+    stage_7()
 
 
 def main():
