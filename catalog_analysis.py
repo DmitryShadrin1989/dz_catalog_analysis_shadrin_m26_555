@@ -390,7 +390,8 @@ def show_examples():
 
 
 def main():
-    show_examples()
+    # Раскомментировать вызов, чтобы увидеть работу функций этапов 1–8
+    # show_examples()
     build_report(movies=movies)
 
 
